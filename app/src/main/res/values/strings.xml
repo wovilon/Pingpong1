@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">CosmoBall</string>
+    <string name="btNewGame">NEW GAME</string>
+    <string name="phoneRotation">0</string>
+    <string name="How_to_play">How to play</string>
+    <string name="Settings">Settings</string>
+    <string name="Contacts">Contacts</string>
+    <string name="Exit">Exit</string>
+    <string name="Gyro1">Gyroscope axis X test:</string>
+    <string name="Gyro2">Gyroscope axis Y test:</string>
+    <string name="Gyro3">Gyroscope axis Z test:</string>
+    <string name="Testing">Testing sensor system:</string>
+    <string name="YouWin">YOU WIN!</string>
+    <string name="YouLoose">YOU LOOSE!</string>
+    <string name="Retry">Play again</string>
+    <string name="ToMainMenu">To  main menu</string>
+    <string name="GeneralSound">General sound</string>
+    <string name="SoundSettings">Sound settings</string>
+    <string name="MusicSound">Music sound</string>
+    <string name="EffectsSound">Effects sound</string>
+    <string name="ControlsSettings">Controlls settings</string>
+    <string name="GeneralSoundValue">60</string>
+    <string name="HespLeft">Turn device \n unclockwise to move \n pad left</string>
+    <string name="HelpRight">Turn device \n clockwise to move \n pad right</string>
+    <string name="MainAim">The main aim of the game is to defeat all the bricks above your pad.
+        Do not let the ball exiting the lower border!</string>
+</resources>
