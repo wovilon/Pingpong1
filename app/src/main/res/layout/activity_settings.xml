@@ -86,4 +86,41 @@
         android:layout_alignTop="@+id/musicSound"
         android:layout_alignStart="@+id/GeneralSoundView" />
 
+    <RadioGroup
+        android:id="@+id/turbulenceRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_below="@+id/textView8"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="11dp">
+
+        <RadioButton
+            android:id="@+id/mode_classic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onModeItemClick"
+            android:text="@string/mode_classic"
+            android:textColor="@android:color/darker_gray" />
+
+        <RadioButton
+            android:id="@+id/mode_drunk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onModeItemClick"
+            android:text="@string/mode_drunk"
+            android:textColor="@android:color/darker_gray" />
+
+        <RadioButton
+            android:id="@+id/mode_ship"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onModeItemClick"
+            android:text="@string/mode_ship"
+            android:textColor="@android:color/darker_gray" />
+    </RadioGroup>
+
 </RelativeLayout>

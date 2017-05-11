@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ public class SettingsActivity extends AppCompatActivity implements SeekBar.OnSee
     int generalSoundValue=50, musicSoundValue=50, effectsSoundValue=50;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +28,9 @@ public class SettingsActivity extends AppCompatActivity implements SeekBar.OnSee
 
 
         SharedPreferences settings = getSharedPreferences("Settings", 0);
-        generalSoundValue = settings.getInt("GenSnd", 0);
-        musicSoundValue = settings.getInt("MusSnd", 0);
-        effectsSoundValue = settings.getInt("EffSnd", 0);
+        generalSoundValue = settings.getInt("GenSnd", 50);
+        musicSoundValue = settings.getInt("MusSnd", 100);
+        effectsSoundValue = settings.getInt("EffSnd", 100);
 
         final SeekBar generalSnd=(SeekBar)findViewById(R.id.generalSound);
         final SeekBar musicSnd=(SeekBar)findViewById(musicSound);
@@ -38,6 +41,16 @@ public class SettingsActivity extends AppCompatActivity implements SeekBar.OnSee
         generalSnd.setProgress(generalSoundValue);
         musicSnd.setProgress(musicSoundValue);
         effectsSnd.setProgress(effectsSoundValue);
+
+        final RadioGroup turbulenceRadioGroup=(RadioGroup)findViewById(R.id.turbulenceRadioGroup);
+
+
+        switch (settings.getString("TurbulenceMode","mode_classic")) {
+            case "mode_classic": turbulenceRadioGroup.check(R.id.mode_classic); break;
+            case "mode_drunk": turbulenceRadioGroup.check(R.id.mode_drunk); break;
+            case "mode_ship": turbulenceRadioGroup.check(R.id.mode_ship); break;
+            default: turbulenceRadioGroup.check(R.id.mode_classic); break;
+        }
 
 
     }
@@ -85,5 +98,21 @@ public class SettingsActivity extends AppCompatActivity implements SeekBar.OnSee
 
     public void MoveSound(Context context){
 
+    }
+
+    //turbulence radiobutton selection
+    public void onModeItemClick(View view) {
+        SharedPreferences settings = getSharedPreferences("Settings",MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+
+        switch (view.getId()){
+            case R.id.mode_classic:
+                editor.putString("TurbulenceMode", "mode_classic"); break;
+            case R.id.mode_drunk:
+                editor.putString("TurbulenceMode", "mode_drunk"); break;
+            case R.id.mode_ship:
+                editor.putString("TurbulenceMode", "mode_ship"); break;
+        }
+        editor.apply();
     }
 }

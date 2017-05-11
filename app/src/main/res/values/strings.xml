@@ -24,4 +24,7 @@
     <string name="HelpRight">Turn device \n clockwise to move \n pad right</string>
     <string name="MainAim">The main aim of the game is to defeat all the bricks above your pad.
         Do not let the ball exiting the lower border!</string>
+    <string name="mode_classic">Classic mode</string>
+    <string name="mode_drunk">Drunk mode</string>
+    <string name="mode_ship">Ship mode</string>
 </resources>

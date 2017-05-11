@@ -154,7 +154,7 @@ class GameManager extends Thread {
         Intent intent=new Intent(context, WinLooseActivity.class);
         SharedPreferences settings = context.getSharedPreferences("Settings", 0);
         MusicPlayer.oncreate(context,"levelFon");
-        float vol=(float)settings.getInt("GenSnd",0) * settings.getInt("MusSnd",0);  vol/=100*100;
+        float vol=(float)settings.getInt("GenSnd",50) * settings.getInt("MusSnd",100);  vol/=100*100;
         MusicPlayer.volume(vol,vol);
         MusicPlayer.onstart();
 
@@ -181,11 +181,7 @@ class GameManager extends Thread {
                 oldAlfa=ball.alfa;
 
                 ball.alfa=collisionFinder(ball,bricks);
-                /*if (touched & touched1)
-                    ball.alfa=Math.toRadians(-90);
 
-                touched1=touched;
-                if (oldAlfa==ball.alfa) touched=false; else touched=true;*/
 
                 pad.undraw();
                 if(ball.y>pad.y+pad.bitmap.getHeight()){
@@ -221,7 +217,7 @@ class GameManager extends Thread {
          if (mmax>0) {
              SharedPreferences settings = context.getSharedPreferences("Settings", 0);
              MediaPlayer touchSound=MediaPlayer.create(context,R.raw.click6);
-             float vol=(float)settings.getInt("GenSnd",0) * settings.getInt("EffSnd",0);  vol/=100*100;
+             float vol=(float)settings.getInt("GenSnd",50) * settings.getInt("EffSnd",100);  vol/=100*100;
              touchSound.setVolume(vol,vol);
              touchSound.start();
 
@@ -383,12 +379,17 @@ class GameManager extends Thread {
         double phoneRotation;
         int [] [] pix;
         Sens sens;
+        private int timeIteration=0;
+        String turbulenceMode;
 
         Pad(Canvas canvas, Context context, int displayWidth, int displayHeight, double phoneRotation) {
             canv=canvas; this.context=context; this.phoneRotation=phoneRotation;
             Resources resources=context.getResources();
             bitmap= BitmapFactory.decodeResource(resources,R.drawable.pad);
             this.sens=new Sens(context);
+            turbulenceMode=context.getSharedPreferences("Settings", 0)
+                    .getString("TurbulenceMode", "mode_classic");
+
 
             int n=0,nmax=0; //get ball pixels
             for (int i=0;i<bitmap.getWidth();i++) {
@@ -416,9 +417,25 @@ class GameManager extends Thread {
                     gameField[(int)this.x+i][(int)this.y+j] = false;
             }}
         void update(){
-            if (x>10&x<displayWidth-bitmap.getWidth()-10) x-=sens.ph*velocity;
-            else {if(x<=10&sens.ph<=0)x-=sens.ph*5;
-                if (x>=displayWidth-bitmap.getWidth()-10&sens.ph>=0)x-=sens.ph*velocity;}
+            //add turbulence
+            // ship turbulence
+            double turbX;
+            switch (turbulenceMode) {
+                case "mode_classic": turbX = 0; break;
+                case "mode_drunk": turbX = 2 * Math.sin((double) timeIteration / 3)
+                                            +5 * Math.sin((double) timeIteration / 20); break;
+                case "mode_ship": turbX = 5 * Math.sin((double) timeIteration / 20); break;
+                default:turbX = 0; break;
+            }
+            timeIteration++;
+
+            //pad motion between borders
+            if (x>10&x<displayWidth-bitmap.getWidth()-10) x-=sens.ph*velocity+turbX;
+            else {if(x<=10&sens.ph<=0)x-=sens.ph*5+turbX;
+                if (x>=displayWidth-bitmap.getWidth()-10&sens.ph>=0)x-=sens.ph*velocity+turbX;}
+            //if pad is outside borders
+            if (x<10) x=10;
+            else if (x>displayWidth-bitmap.getWidth()-10) x=displayWidth-bitmap.getWidth()-10;
 
         }
     }

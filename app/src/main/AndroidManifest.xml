@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".GameActivity" />
-        <activity android:name=".HowToOlayActivity" />
+        <activity android:name=".HowToPlayActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".WinLooseActivity"></activity>
     </application>

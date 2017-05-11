@@ -8,10 +8,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 
 
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         SharedPreferences settings = getSharedPreferences("Settings", 0);
         musicPlayer=new MusicPlayer();
         musicPlayer.oncreate(this, "menuFon");
-        float vol=(float)settings.getInt("GenSnd",0) * settings.getInt("MusSnd",0);  vol/=100*100;
+        float vol=(float)settings.getInt("GenSnd",50) * settings.getInt("MusSnd",100);  vol/=100*100;
         musicPlayer.volume(vol,vol);
         musicPlayer.onstart();
 
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void onHowClick(View view) {
-        Intent intent=new Intent(MainActivity.this, HowToOlayActivity.class);
+        Intent intent=new Intent(MainActivity.this, HowToPlayActivity.class);
         startActivity(intent);
     }
 

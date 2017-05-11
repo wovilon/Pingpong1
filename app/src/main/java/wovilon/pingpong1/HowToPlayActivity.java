@@ -3,7 +3,7 @@ package wovilon.pingpong1;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HowToOlayActivity extends AppCompatActivity {
+public class HowToPlayActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
