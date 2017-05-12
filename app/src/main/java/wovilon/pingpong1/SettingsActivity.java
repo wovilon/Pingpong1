@@ -11,6 +11,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import static wovilon.pingpong1.MusicPlayer.sound;
+import static wovilon.pingpong1.R.id.BallVelocitySeekBar;
 import static wovilon.pingpong1.R.id.effectsSound;
 import static wovilon.pingpong1.R.id.generalSound;
 import static wovilon.pingpong1.R.id.musicSound;
@@ -43,8 +44,6 @@ public class SettingsActivity extends AppCompatActivity implements SeekBar.OnSee
         effectsSnd.setProgress(effectsSoundValue);
 
         final RadioGroup turbulenceRadioGroup=(RadioGroup)findViewById(R.id.turbulenceRadioGroup);
-
-
         switch (settings.getString("TurbulenceMode","mode_classic")) {
             case "mode_classic": turbulenceRadioGroup.check(R.id.mode_classic); break;
             case "mode_drunk": turbulenceRadioGroup.check(R.id.mode_drunk); break;
@@ -52,6 +51,9 @@ public class SettingsActivity extends AppCompatActivity implements SeekBar.OnSee
             default: turbulenceRadioGroup.check(R.id.mode_classic); break;
         }
 
+        final SeekBar ballVelocitySeekBar=(SeekBar)findViewById(R.id.BallVelocitySeekBar);
+        ballVelocitySeekBar.setProgress(settings.getInt("BallVelocity", 30)/5);
+        ballVelocitySeekBar.setOnSeekBarChangeListener(this);
 
     }
 
@@ -76,6 +78,11 @@ public class SettingsActivity extends AppCompatActivity implements SeekBar.OnSee
                 effectsSoundValue=seekBar.getProgress();
                 editor.putInt("EffSnd", effectsSoundValue);
                 MusicPlayer.effVolume=(float)generalSoundValue/100 *effectsSoundValue/100;break;
+            }
+
+
+            case (BallVelocitySeekBar):{
+            editor.putInt("BallVelocity", seekBar.getProgress()*5);
             }
          }
          editor.apply();

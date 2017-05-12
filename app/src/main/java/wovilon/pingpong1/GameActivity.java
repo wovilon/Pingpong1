@@ -115,6 +115,7 @@ class GameManager extends Thread {
         this.surfaceHolder = surfaceHolder;
         this. context=context;
         this.phoneRotation=phoneRotation;
+        int border=10; //border width
 
 
         Resources resources=context.getResources(); //get screen size and create boolean gameField
@@ -125,14 +126,14 @@ class GameManager extends Thread {
         for (int i=0;i<this.displayWidth;i++){
             for (int j=0;j<this.displayHeight;j++){gameField[i] [j]=false;} }
 
-        for (int i=0;i<10;i++){
+        /*for (int i=0;i<border;i++){
             for (int j=0;j<this.displayHeight;j++){gameField[i] [j]=true;} }
-        for (int i=this.displayWidth-10;i<this.displayWidth;i++){
+        for (int i=this.displayWidth-border;i<this.displayWidth;i++){
             for (int j=0;j<this.displayHeight;j++){gameField[i] [j]=true;} }
         for (int i=0;i<this.displayWidth;i++){
-            for (int j=0;j<10;j++){gameField[i] [j]=true;} }
-        //for (int i=0;i<this.displayWidth;i++){
-         //   for (int j=this.displayHeight-50;j<this.displayHeight;j++){gameField[i] [j]=true;} }
+            for (int j=0;j<border;j++){gameField[i] [j]=true;} }*/
+        for (int i=0;i<this.displayWidth;i++){
+            for (int j=this.displayHeight-border-40;j<this.displayHeight;j++){gameField[i] [j]=true;} }
 
     }
 
@@ -204,16 +205,28 @@ class GameManager extends Thread {
          double alfa=ball.alfa;
          int mmax=0; //numder of interferred pixels
          double xsr=0,ysr=0; //middle point of interferred pixels
-         double normal; //angle of normal to surface
+         double normal=ball.alfa-Math.toRadians(90); //angle of normal to surface
          int intx=(int)ball.x; int inty=(int)ball.y; //ball coordinates
          Point intpix=new Point(-1,-1); //one of all interferred pixels to find object of collision
 
-         for (int n=0;n<ball.pix.length;n++) {
-             if (this.gameField[(int)ball.x+ball.pix[n][0] ] [(int)ball.y+ball.pix[n][1] ]){
-              mmax++; intpix.x=(int)ball.x+ball.pix[n][0]; intpix.y=(int)ball.y+ball.pix[n][1] ; }
-                }
-            String tx="",ty="";
 
+                //collision with walls, then put normal directly
+             if (ball.x<0) normal=Math.toRadians(0);
+             else if (ball.x>displayWidth-ball.bitmap.getWidth()) normal=Math.toRadians(180);
+             else if (ball.y<0) normal=Math.toRadians(90);
+             else {
+
+                 //else find interference pixels
+                 for (int n = 0; n < ball.pix.length; n++) {
+                     if (this.gameField[(int) ball.x + ball.pix[n][0]][(int) ball.y + ball.pix[n][1]]) {
+                         mmax++;
+                         intpix.x = (int) ball.x + ball.pix[n][0];
+                         intpix.y = (int) ball.y + ball.pix[n][1];
+                     }
+                 }
+             }
+
+            //if interferred pixels number >0, than calculating normal
          if (mmax>0) {
              SharedPreferences settings = context.getSharedPreferences("Settings", 0);
              MediaPlayer touchSound=MediaPlayer.create(context,R.raw.click6);
@@ -224,8 +237,7 @@ class GameManager extends Thread {
              for (int n=0;n<ball.pix.length;n++) {
                  if (gameField[intx+ball.pix[n][0]][inty+ball.pix[n][1]]) {
                      xsr+=intx+ball.pix[n][0];
-                     ysr+=inty+ball.pix[n][1];
-                     tx+=intx+ball.pix[n][0]+" "; ty+=inty+ball.pix[n][1]+" ";}
+                     ysr+=inty+ball.pix[n][1]; }
              }
              xsr=xsr/mmax+1; ysr=ysr/mmax+1;
              //normal=Math.atan((ball.y+ball.bitmap.getHeight()/2-ysr) / (ball.x+ball.bitmap.getWidth()/2-xsr));
@@ -233,22 +245,16 @@ class GameManager extends Thread {
 
              if (normal<0) normal=Math.toRadians(360)+normal;
              normal=normal%Math.toRadians(360);
-
-                double alfaBuffer = (2 * normal - (alfa - Math.toRadians(180)))%Math.toRadians(360);
-                if (alfaBuffer<0) alfaBuffer=Math.toRadians(360)+alfaBuffer;
+         }
+            //calculating new alfa
+             double alfaBuffer = (2 * normal - (alfa - Math.toRadians(180)))%Math.toRadians(360);
+             if (alfaBuffer<0) alfaBuffer=Math.toRadians(360)+alfaBuffer;
 
              if (Math.abs(normal - alfaBuffer)<Math.toRadians(90)|
                      Math.abs(normal - alfaBuffer)>Math.toRadians(270) ) {
                  alfa = alfaBuffer;
              }
 
-             double norm=Math.toDegrees(normal);
-             double alfBuf=Math.toDegrees(alfaBuffer);
-             double alf=Math.toDegrees(alfa);
-             double a_180=Math.toDegrees(alfa-180);
-             Math.toDegrees(alfaBuffer);
-
-             }
          if (intpix.x!=(-1)){
              for (int i=0;i<bricks.length;i++){
                  if (intpix.x>=bricks[i].x & intpix.x<=bricks[i].x+bricks[i].bitmap.getWidth()
@@ -264,7 +270,6 @@ class GameManager extends Thread {
                  intent.putExtra("winloose",true);
                  context.startActivity(intent);
                  }
-
          }
          return alfa;
     }
@@ -308,9 +313,9 @@ class GameManager extends Thread {
         Canvas canv;
         Paint mPaint;
         double x=300,y=900;
-        double alfa=Math.toRadians(-90),velocity=10;
+        double alfa=Math.toRadians(-90);
+        double velocity=context.getSharedPreferences("Settings", 0).getInt("BallVelocity", 20)+5;
         int [] [] pix;
-
 
         Ball(Canvas canvas, Context context) {
             canv=canvas;
