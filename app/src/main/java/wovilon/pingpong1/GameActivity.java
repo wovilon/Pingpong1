@@ -19,6 +19,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -67,6 +68,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 
 
+
     class GameView extends SurfaceView implements SurfaceHolder.Callback{
         Context context;
         double phoneRotation;
@@ -96,6 +98,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         @Override
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         }
+
     }
 }
 
@@ -145,8 +148,7 @@ class GameManager extends Thread {
 
     @Override
     public void run() {
-        Canvas canvas=null;
-        canvas = surfaceHolder.lockCanvas(null);
+        Canvas canvas = surfaceHolder.lockCanvas(null);
         BackGround backGround=new BackGround(canvas);
         Ball ball=new Ball(canvas,context);
         Pad pad=new Pad(canvas,context,this.displayWidth,this.displayHeight,this.phoneRotation);

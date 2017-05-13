@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void onHowClick(View view) {
-        Intent intent=new Intent(MainActivity.this, HowToPlayActivity.class);
+        Intent intent=new Intent(MainActivity.this, LevelEditorActivity.class);
         startActivity(intent);
     }
 

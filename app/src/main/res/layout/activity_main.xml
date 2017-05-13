@@ -28,18 +28,18 @@
         android:textStyle="normal|bold" />
 
     <Button
-        android:text="@string/How_to_play"
+        android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button1"
         android:layout_marginTop="17dp"
-        android:id="@+id/button2"
+        android:onClick="onHowClick"
+        android:text="@string/level_editor"
         android:textColor="@color/text_color"
         android:textColorLink="@android:color/holo_blue_dark"
         android:textSize="@dimen/activity_vertical_margin"
-        android:textStyle="normal|bold"
-        android:layout_below="@+id/button1"
-        android:layout_alignParentStart="true"
-        android:onClick="onHowClick" />
+        android:textStyle="normal|bold" />
 
     <Button
         android:text="@string/Settings"
