@@ -55,15 +55,16 @@ public class GameActivity extends Activity implements SensorEventListener {
         SM=(SensorManager)getSystemService(SENSOR_SERVICE);
         mySensor=SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this,mySensor,SensorManager.SENSOR_DELAY_NORMAL);
-
-
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){ Intent intent=new Intent(GameActivity.this, MainActivity.class);
             startActivity(intent); MusicPlayer.onstop();}
         return true;
     }
+
+
 
 
     class GameView extends SurfaceView implements SurfaceHolder.Callback{
@@ -84,7 +85,6 @@ public class GameActivity extends Activity implements SensorEventListener {
             gameManager = new GameManager(getHolder(),context,this.phoneRotation);
             gameManager.setRunning(true);
             gameManager.start();
-
 
         }
 
@@ -126,14 +126,17 @@ class GameManager extends Thread {
         for (int i=0;i<this.displayWidth;i++){
             for (int j=0;j<this.displayHeight;j++){gameField[i] [j]=false;} }
 
+        //old code for field borders
         /*for (int i=0;i<border;i++){
             for (int j=0;j<this.displayHeight;j++){gameField[i] [j]=true;} }
         for (int i=this.displayWidth-border;i<this.displayWidth;i++){
             for (int j=0;j<this.displayHeight;j++){gameField[i] [j]=true;} }
         for (int i=0;i<this.displayWidth;i++){
             for (int j=0;j<border;j++){gameField[i] [j]=true;} }*/
-        for (int i=0;i<this.displayWidth;i++){
-            for (int j=this.displayHeight-border-40;j<this.displayHeight;j++){gameField[i] [j]=true;} }
+
+        //old code for bottom field border
+        /*for (int i=0;i<this.displayWidth;i++){
+            for (int j=this.displayHeight-border-40;j<this.displayHeight;j++){gameField[i] [j]=true;} }*/
 
     }
 
@@ -183,11 +186,13 @@ class GameManager extends Thread {
 
                 ball.alfa=collisionFinder(ball,bricks);
 
-
                 pad.undraw();
+
                 if(ball.y>pad.y+pad.bitmap.getHeight()){
                     intent.putExtra("winloose",false);
-                    context.startActivity(intent); MusicPlayer.onstop();
+                    context.startActivity(intent);
+                    MusicPlayer.onstop();
+                    running=false;
                 }
 
                 sleep(10);
@@ -269,13 +274,15 @@ class GameManager extends Thread {
                  Intent intent=new Intent(context, WinLooseActivity.class);
                  intent.putExtra("winloose",true);
                  context.startActivity(intent);
+                 MusicPlayer.onstop();
                  }
          }
          return alfa;
     }
 
     private int[][] createBricks(){
-        int X=60, Y=260, w=60, h=60;
+        int Y=260, w=60, h=60;
+        int X=displayWidth/2-5*w;//calculate start X, so that bricks are symetric on screen
         int [][] brickPoints=new int[22][2];
 
         brickPoints[0][0]=X; brickPoints[0][1]=Y;
@@ -392,6 +399,8 @@ class GameManager extends Thread {
             Resources resources=context.getResources();
             bitmap= BitmapFactory.decodeResource(resources,R.drawable.pad);
             this.sens=new Sens(context);
+            velocity=(double)context.getSharedPreferences("Settings", 0)
+                    .getInt("BallVelocity", 20)/5+5;//depends on ball velocity
             turbulenceMode=context.getSharedPreferences("Settings", 0)
                     .getString("TurbulenceMode", "mode_classic");
 

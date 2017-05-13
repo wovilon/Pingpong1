@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CosmoBall</string>
+    <string name="app_name">GraviBall</string>
     <string name="btNewGame">NEW GAME</string>
     <string name="phoneRotation">0</string>
     <string name="How_to_play">How to play</string>

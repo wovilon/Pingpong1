@@ -15,10 +15,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameActivity" />
-        <activity android:name=".HowToPlayActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".WinLooseActivity"></activity>
+
+        <activity android:name=".GameActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".HowToPlayActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".SettingsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".WinLooseActivity"
+            android:screenOrientation="portrait"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="5677c33efd5093043f8c64254464d1abf7a13490" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
