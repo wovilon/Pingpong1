@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onBtNewGame(View view) {
         musicPlayer.onstop();
         Intent intent=new Intent(MainActivity.this, GameActivity.class);
+        intent.putExtra("LevelType", "MainLevels");
+        intent.putExtra("LevelNumber", 1);
         startActivity(intent);
 
     }

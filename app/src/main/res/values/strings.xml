@@ -29,4 +29,6 @@
     <string name="mode_ship">Ship mode</string>
     <string name="ball_velocity">Ball velocity</string>
     <string name="level_editor">Level editor</string>
+    <string name="SavePlay">SAVE AND PLAY</string>
+    <string name="Load">LOAD</string>
 </resources>

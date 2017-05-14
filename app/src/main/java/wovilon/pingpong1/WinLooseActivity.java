@@ -28,8 +28,7 @@ public class WinLooseActivity extends AppCompatActivity {
     }
 
     public void onPlayAgain(View view) {
-        Intent intent=new Intent(WinLooseActivity.this, GameActivity.class);
-        startActivity(intent);
+        finish();
 
     }
 

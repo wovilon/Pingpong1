@@ -18,11 +18,16 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+
+import wovilon.pingpong1.db.DbUpdater;
+import wovilon.pingpong1.model.Level;
+
 import static android.content.Context.SENSOR_SERVICE;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -32,6 +37,7 @@ public class GameActivity extends Activity implements SensorEventListener {
     Sensor mySensor;
     SensorManager SM;
     public double phoneRotation;
+    Level level;
 
     void rotTranslate(float dat){this.phoneRotation=dat; //if (this.phoneRotation>2) System.exit(0);
         }
@@ -49,13 +55,19 @@ public class GameActivity extends Activity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(new GameView(this,this.phoneRotation));
+        level=new Level();
+        Intent intent=getIntent();
+        level.setType(intent.getExtras().getString("LevelType"));
+        level.setLevelNumber(intent.getExtras().getInt("LevelNumber"));
+
+        setContentView(new GameView(this,this.phoneRotation, level));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         SM=(SensorManager)getSystemService(SENSOR_SERVICE);
         mySensor=SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this,mySensor,SensorManager.SENSOR_DELAY_NORMAL);
+
     }
 
     @Override
@@ -74,17 +86,19 @@ public class GameActivity extends Activity implements SensorEventListener {
         double phoneRotation;
         private SurfaceHolder mSurfaceHolder;
         private GameManager gameManager;
+        Level level;
 
-        public GameView (Context context,double phoneRotation){
+        public GameView (Context context,double phoneRotation, Level level){
             super(context); this.context=context; this.phoneRotation=phoneRotation;
             mSurfaceHolder=getHolder();
             mSurfaceHolder.addCallback(this);
+            this.level=level;
 
         }
 
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
-            gameManager = new GameManager(getHolder(),context,this.phoneRotation);
+            gameManager = new GameManager(getHolder(),context,this.phoneRotation, level);
             gameManager.setRunning(true);
             gameManager.start();
 
@@ -111,15 +125,19 @@ class GameManager extends Thread {
     private int displayHeight, displayWidth;
     private boolean [][] gameField;
     private int defeatedBricks=0;
+    Level level;
 
 
 
-    GameManager(SurfaceHolder surfaceHolder, Context context, double phoneRotation) {
+    GameManager(SurfaceHolder surfaceHolder, Context context, double phoneRotation, Level currentLevel) {
         this.surfaceHolder = surfaceHolder;
         this. context=context;
         this.phoneRotation=phoneRotation;
         int border=10; //border width
 
+        this.level=currentLevel;
+        DbUpdater dbUpdater=new DbUpdater(context);
+        level.setBricks(dbUpdater.getLevelBricksFromDb(dbUpdater.getCount()-1));
 
         Resources resources=context.getResources(); //get screen size and create boolean gameField
         DisplayMetrics displayMetrics=resources.getDisplayMetrics();
@@ -285,7 +303,20 @@ class GameManager extends Thread {
     private int[][] createBricks(){
         int Y=260, w=60, h=60;
         int X=displayWidth/2-5*w;//calculate start X, so that bricks are symetric on screen
-        int [][] brickPoints=new int[22][2];
+        int[][] brickPoints;
+
+        if (level.getType().equals("UserLevels")) {
+            try {
+                brickPoints = new int[level.getBricks().size()][2];
+                for (int i = 0; i < level.getBricks().size(); i++) {
+                    brickPoints[i][0] = level.getBricks().get(i).x;
+                    brickPoints[i][1] = level.getBricks().get(i).y;
+                }
+
+            } catch (NegativeArraySizeException nae) {brickPoints = new int[0][2];
+            }
+        }else {
+            brickPoints = new int[22][2];
 
         brickPoints[0][0]=X; brickPoints[0][1]=Y;
         brickPoints[1][0]=X+ w; brickPoints[1][1]=Y;
@@ -311,7 +342,7 @@ class GameManager extends Thread {
         brickPoints[19][0]=X+w*6; brickPoints[19][1]=Y+h*2;
 
         brickPoints[20][0]=X+w*4; brickPoints[20][1]=Y+h*3;
-        brickPoints[21][0]=X+w*5; brickPoints[21][1]=Y+h*3;
+        brickPoints[21][0]=X+w*5; brickPoints[21][1]=Y+h*3;}
 
         return brickPoints;
     }
