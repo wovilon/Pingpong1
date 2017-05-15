@@ -18,14 +18,13 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
 import wovilon.pingpong1.db.DbUpdater;
+import wovilon.pingpong1.gameObjects.ScoreImage;
 import wovilon.pingpong1.model.Level;
 
 import static android.content.Context.SENSOR_SERVICE;
@@ -80,7 +79,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 
 
-
     class GameView extends SurfaceView implements SurfaceHolder.Callback{
         Context context;
         double phoneRotation;
@@ -125,17 +123,17 @@ class GameManager extends Thread {
     private int displayHeight, displayWidth;
     private boolean [][] gameField;
     private int defeatedBricks=0;
-    Level level;
-
+    private Level level;
+    private int score=0;
 
 
     GameManager(SurfaceHolder surfaceHolder, Context context, double phoneRotation, Level currentLevel) {
         this.surfaceHolder = surfaceHolder;
-        this. context=context;
+        this.context=context;
         this.phoneRotation=phoneRotation;
-        int border=10; //border width
-
         this.level=currentLevel;
+        this.score=0;
+
         DbUpdater dbUpdater=new DbUpdater(context);
         level.setBricks(dbUpdater.getLevelBricksFromDb(dbUpdater.getCount()-1));
 
@@ -171,6 +169,9 @@ class GameManager extends Thread {
         Ball ball=new Ball(canvas,context);
         Pad pad=new Pad(canvas,context,this.displayWidth,this.displayHeight,this.phoneRotation);
         Brick [] bricks=new Brick[this.createBricks().length];
+
+        Paint mPaint=new Paint();
+        ScoreImage scoreImage=new ScoreImage(canvas,context,mPaint);
         //boolean touched=false, touched1=false;
         double oldAlfa;
         for (int i=0;i<this.createBricks().length;i++){
@@ -207,9 +208,13 @@ class GameManager extends Thread {
                 ball.alfa=collisionFinder(ball,bricks);
 
                 pad.undraw();
+                scoreImage.draw(score);
 
                 if(ball.y>pad.y+pad.bitmap.getHeight()){
                     intent.putExtra("winloose",false);
+                    intent.putExtra("score", score);
+                    intent.putExtra("LevelType", level.getType());
+                    intent.putExtra("LevelNumber", level.getLevelNumber());
                     context.startActivity(intent);
                     MusicPlayer.onstop();
                     running=false;
@@ -233,14 +238,14 @@ class GameManager extends Thread {
          double normal=ball.alfa-Math.toRadians(90); //angle of normal to surface
          int intx=(int)ball.x; int inty=(int)ball.y; //ball coordinates
          Point intpix=new Point(-1,-1); //one of all interferred pixels to find object of collision
+             String collisionObject="pad"; //pad by default
 
 
                 //collision with walls, then put normal directly
-             if (ball.x<0) normal=Math.toRadians(0);
-             else if (ball.x>displayWidth-ball.bitmap.getWidth()) normal=Math.toRadians(180);
-             else if (ball.y<0) normal=Math.toRadians(90);
+             if (ball.x<0) {normal=Math.toRadians(0); collisionObject="wall";}
+             else if (ball.x>displayWidth-ball.bitmap.getWidth()) {normal=Math.toRadians(180); collisionObject="wall";}
+             else if (ball.y<0) {normal=Math.toRadians(90); collisionObject="wall";}
              else {
-
                  //else find interference pixels
                  for (int n = 0; n < ball.pix.length; n++) {
                      if (this.gameField[(int) ball.x + ball.pix[n][0]][(int) ball.y + ball.pix[n][1]]) {
@@ -287,16 +292,26 @@ class GameManager extends Thread {
                      bricks[i].state=false;
                      bricks[i].delete();
                      this.defeatedBricks+=1;
+                     collisionObject="brick";
                  }
              }
              if (this.defeatedBricks>=bricks.length) {
                  running = false;
                  Intent intent=new Intent(context, WinLooseActivity.class);
                  intent.putExtra("winloose",true);
+                 intent.putExtra("score", score);
+                 intent.putExtra("LevelType", level.getType());
+                 intent.putExtra("LevelNumber", level.getLevelNumber());
                  context.startActivity(intent);
                  MusicPlayer.onstop();
                  }
          }
+
+             if (collisionObject.equals("brick")) score += 10;
+             else if (collisionObject.equals("pad")) score -= 0;
+             else if (collisionObject.equals("wall")) score -= 3;
+             if (score < 0) score = 0;
+
          return alfa;
     }
 
@@ -465,7 +480,6 @@ class GameManager extends Thread {
             }}
         void update(){
             //add turbulence
-            // ship turbulence
             double turbX;
             switch (turbulenceMode) {
                 case "mode_classic": turbX = 0; break;
@@ -504,7 +518,6 @@ class GameManager extends Thread {
             }
 
     }
-
 
 
 }

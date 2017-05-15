@@ -31,4 +31,6 @@
     <string name="level_editor">Level editor</string>
     <string name="SavePlay">SAVE AND PLAY</string>
     <string name="Load">LOAD</string>
+    <string name="Score">Score</string>
+    <string name="High_score">High score</string>
 </resources>

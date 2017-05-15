@@ -15,13 +15,17 @@ class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_UserLevels =
-                "CREATE TABLE UserLevelsTable (id ID, name NAME, bricksJSON BRICKSJSON)";
+                "CREATE TABLE UserLevels (id ID, name NAME, bricksJSON BRICKSJSON, highScore HIGHSCORE)";
         db.execSQL(CREATE_TABLE_UserLevels);
+        /*String CREATE_TABLE_MainLevels =
+                "CREATE TABLE MainLevels (id ID, name NAME, bricksJSON BRICKSJSON, highScore HIGHSCORE)";
+        db.execSQL(CREATE_TABLE_MainLevels);*/
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + "UserLevelsTable");
+        db.execSQL("DROP TABLE IF EXISTS " + "UserLevels");
+        //db.execSQL("DROP TABLE IF EXISTS " + "MainLevels");
         onCreate(db);
     }
 }

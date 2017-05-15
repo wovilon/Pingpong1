@@ -19,9 +19,35 @@
         android:textColor="@color/GreenCol"
         android:textSize="@android:dimen/app_icon_size"
         android:textStyle="bold"
-        android:layout_marginBottom="34dp"
-        android:layout_above="@+id/button1"
+        android:layout_above="@+id/Score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="31dp" />
+
+    <TextView
+        android:id="@+id/Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Score"
+        android:textAllCaps="true"
+        android:textColor="?android:attr/colorPressedHighlight"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="28dp"
+        android:layout_above="@+id/HighScore"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/HighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/High_score"
+        android:textAllCaps="true"
+        android:textColor="?android:attr/colorPressedHighlight"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_above="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp" />
 
     <Button
         android:text="@string/Retry"

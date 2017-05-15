@@ -25,7 +25,7 @@ public class DbUpdater {
         this.context=context;
         DbHelper dbHelper=new DbHelper(context);
         db=dbHelper.getWritableDatabase();
-        c=db.rawQuery("SELECT * FROM UserLevelsTable", null);
+        c=db.rawQuery("SELECT * FROM UserLevels", null);
     }
 
     public void addLevel(Level level){
@@ -53,7 +53,8 @@ public class DbUpdater {
         data.put("id",id);
         data.put("name", "MyLevel_"+id);
         data.put("bricksJSON", levelJSON.toString());
-        db.insert("UserLevelsTable", null, data);
+        data.put("highScore",0);
+        db.insert("UserLevels", null, data);
         data.clear();
     }
 
@@ -71,6 +72,23 @@ public class DbUpdater {
         }catch (JSONException je){}
 
         return bricks;
+    }
+
+    public void setHighScore(String levelType,int id,int highScore){
+        c.moveToPosition(id);
+
+        ContentValues data=new ContentValues();
+        data.put("highScore",highScore);
+        db.insert(levelType, null, data);
+        data.clear();
+    }
+
+    public int getHighScore(String levelType,int id){
+        int highScore;
+        c.moveToPosition(id);
+        highScore=c.getInt(c.getColumnIndex("highScore"));
+
+        return highScore;
     }
 
 

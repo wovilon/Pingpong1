@@ -43,7 +43,7 @@ LevelEditorView levelEditorView;
             Resources resources = getResources(); //get screen size and create boolean gameField
             DisplayMetrics displayMetrics = resources.getDisplayMetrics();
 
-            //if button pressed (calculated from ccordinates)
+            //if button pressed (calculated from coordinates)
             if (x > levelEditorView.savePlayButtonXY.x
                     & x < levelEditorView.savePlayButtonXY.x + levelEditorView.button.getWidth()
                     & y > levelEditorView.savePlayButtonXY.y + resources.getDimension(R.dimen.dy)

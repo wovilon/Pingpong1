@@ -11,6 +11,16 @@ public class Level {
     private String type;
     private int levelNumber;
 
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    private int highScore;
+
     public void setType(String type) {
         this.type = type;
     }
@@ -36,16 +46,13 @@ public class Level {
         this.bricks = bricks;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
 
-
     public ArrayList<Point> getBricks() {
             return bricks;
     }
-
 
     public String getName() {
         return name;

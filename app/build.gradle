@@ -20,7 +20,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "wovilon.pingpong1"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "0.2"
