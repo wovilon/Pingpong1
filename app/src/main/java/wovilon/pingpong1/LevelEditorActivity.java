@@ -52,13 +52,14 @@ LevelEditorView levelEditorView;
 
                 Level level=new Level();
                 level.setBricks(bricksList);
-                DbUpdater dbUpdater=new DbUpdater(this);
+                level.setType("UserLevels");
+                DbUpdater dbUpdater=new DbUpdater(this,level.getType());
                 dbUpdater.addLevel(level);
                 MusicPlayer musicPlayer=new MusicPlayer();
                 musicPlayer.onstop();
                 Intent intent=new Intent(LevelEditorActivity.this, GameActivity.class);
-                intent.putExtra("LevelType", "UserLevels");
-                intent.putExtra("LevelNumber", dbUpdater.getCount()-1);
+                intent.putExtra("LevelType", level.getType());
+                intent.putExtra("LevelNumber", dbUpdater.getCount());
                 startActivity(intent);
 
             } else if (x > levelEditorView.loadButtonXY.x

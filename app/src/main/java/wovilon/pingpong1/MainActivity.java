@@ -14,6 +14,7 @@ import android.view.View;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
 import io.fabric.sdk.android.Fabric;
+import wovilon.pingpong1.db.DbUpdater;
 
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -56,9 +57,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mySensor=SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this,mySensor,SensorManager.SENSOR_DELAY_NORMAL);
 
+        new DbUpdater(this, "MainLevels").addMainLevels();
 
-       // Toast toast=Toast.makeText(this,text,Toast.LENGTH_SHORT);
-       // toast.show();
+
     }
 
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         musicPlayer.onstop();
         Intent intent=new Intent(MainActivity.this, GameActivity.class);
         intent.putExtra("LevelType", "MainLevels");
-        intent.putExtra("LevelNumber", 1);
+        intent.putExtra("LevelNumber", 0);
         startActivity(intent);
 
     }
@@ -87,8 +88,5 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void onExitClick(View view) {System.exit(0); }
-
-
-
 
 }

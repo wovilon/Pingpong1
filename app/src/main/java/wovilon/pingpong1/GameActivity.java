@@ -134,8 +134,8 @@ class GameManager extends Thread {
         this.level=currentLevel;
         this.score=0;
 
-        DbUpdater dbUpdater=new DbUpdater(context);
-        level.setBricks(dbUpdater.getLevelBricksFromDb(dbUpdater.getCount()-1));
+        DbUpdater dbUpdater=new DbUpdater(context, level.getType());
+        level.setBricks(dbUpdater.getLevelBricksFromDb(level.getLevelNumber()));
 
         Resources resources=context.getResources(); //get screen size and create boolean gameField
         DisplayMetrics displayMetrics=resources.getDisplayMetrics();
@@ -211,7 +211,7 @@ class GameManager extends Thread {
                 scoreImage.draw(score);
 
                 if(ball.y>pad.y+pad.bitmap.getHeight()){
-                    intent.putExtra("winloose",false);
+                    intent.putExtra("winloose", false);
                     intent.putExtra("score", score);
                     intent.putExtra("LevelType", level.getType());
                     intent.putExtra("LevelNumber", level.getLevelNumber());
@@ -316,11 +316,10 @@ class GameManager extends Thread {
     }
 
     private int[][] createBricks(){
-        int Y=260, w=60, h=60;
-        int X=displayWidth/2-5*w;//calculate start X, so that bricks are symetric on screen
-        int[][] brickPoints;
 
-        if (level.getType().equals("UserLevels")) {
+        int[][] brickPoints; //TODO no necessity to convert list to array, try to use array everywhere
+
+
             try {
                 brickPoints = new int[level.getBricks().size()][2];
                 for (int i = 0; i < level.getBricks().size(); i++) {
@@ -330,34 +329,7 @@ class GameManager extends Thread {
 
             } catch (NegativeArraySizeException nae) {brickPoints = new int[0][2];
             }
-        }else {
-            brickPoints = new int[22][2];
 
-        brickPoints[0][0]=X; brickPoints[0][1]=Y;
-        brickPoints[1][0]=X+ w; brickPoints[1][1]=Y;
-        brickPoints[2][0]=X+w*2; brickPoints[2][1]=Y;
-        brickPoints[3][0]=X+w*3; brickPoints[3][1]=Y;
-        brickPoints[4][0]=X+w*4; brickPoints[4][1]=Y;
-        brickPoints[5][0]=X+w*5; brickPoints[5][1]=Y;
-        brickPoints[6][0]=X+w*6; brickPoints[6][1]=Y;
-        brickPoints[7][0]=X+w*7; brickPoints[7][1]=Y;
-        brickPoints[8][0]=X+w*8; brickPoints[8][1]=Y;
-        brickPoints[9][0]=X+w*9; brickPoints[9][1]=Y;
-
-        brickPoints[10][0]=X+w*2; brickPoints[10][1]=Y+ h;
-        brickPoints[11][0]=X+w*3; brickPoints[11][1]=Y+ h;
-        brickPoints[12][0]=X+w*4; brickPoints[12][1]=Y+ h;
-        brickPoints[13][0]=X+w*5; brickPoints[13][1]=Y+ h;
-        brickPoints[14][0]=X+w*6; brickPoints[14][1]=Y+ h;
-        brickPoints[15][0]=X+w*7; brickPoints[15][1]=Y+ h;
-
-        brickPoints[16][0]=X+w*3; brickPoints[16][1]=Y+h*2;
-        brickPoints[17][0]=X+w*4; brickPoints[17][1]=Y+h*2;
-        brickPoints[18][0]=X+w*5; brickPoints[18][1]=Y+h*2;
-        brickPoints[19][0]=X+w*6; brickPoints[19][1]=Y+h*2;
-
-        brickPoints[20][0]=X+w*4; brickPoints[20][1]=Y+h*3;
-        brickPoints[21][0]=X+w*5; brickPoints[21][1]=Y+h*3;}
 
         return brickPoints;
     }

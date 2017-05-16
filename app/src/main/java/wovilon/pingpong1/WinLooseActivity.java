@@ -10,12 +10,12 @@ import wovilon.pingpong1.db.DbUpdater;
 import wovilon.pingpong1.model.Level;
 
 public class WinLooseActivity extends AppCompatActivity {
+    Level level=new Level();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win_loose);
-        Level level=new Level();
         boolean win=getIntent().getExtras().getBoolean("winloose");
         int score=getIntent().getExtras().getInt("score");
         level.setType(getIntent().getExtras().getString("LevelType"));
@@ -34,22 +34,27 @@ public class WinLooseActivity extends AppCompatActivity {
         }
 
         //set score textView text
-        /*TextView highSscoreTextView=(TextView)findViewById(R.id.HighScore);
+        TextView highSscoreTextView=(TextView)findViewById(R.id.HighScore);
         TextView scoreTextView=(TextView)findViewById(R.id.Score);
         scoreTextView.setText(getString(R.string.Score)+": "+score);
 
         //high score showing and add to db, if needed
-        DbUpdater dbUpdater = new DbUpdater(this);
+        DbUpdater dbUpdater = new DbUpdater(this, level.getType());
+        dbUpdater.setHighScore(level.getType(), level.getLevelNumber(), score);
         int highScore = dbUpdater.getHighScore(level.getType(), level.getLevelNumber());
-        if (highScore < score) {
+        /*if (highScore < score) {
             dbUpdater.setHighScore(level.getType(), level.getLevelNumber(), score);
-            highScore = score;
-        }
 
-        highSscoreTextView.setText(getString(R.string.High_score) + ": " + highScore);*/
+        }*/
+
+        highSscoreTextView.setText(getString(R.string.High_score) + ": " + highScore);
     }
 
     public void onPlayAgain(View view) {
+        Intent intent=new Intent(WinLooseActivity.this, GameActivity.class);
+        intent.putExtra("LevelType", level.getType());
+        intent.putExtra("LevelNumber", level.getLevelNumber());
+        startActivity(intent);
         finish();
 
     }
