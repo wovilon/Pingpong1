@@ -40,12 +40,12 @@ public class WinLooseActivity extends AppCompatActivity {
 
         //high score showing and add to db, if needed
         DbUpdater dbUpdater = new DbUpdater(this, level.getType());
-        dbUpdater.setHighScore(level.getType(), level.getLevelNumber(), score);
+
         int highScore = dbUpdater.getHighScore(level.getType(), level.getLevelNumber());
-        /*if (highScore < score) {
+        if (highScore < score) {
             dbUpdater.setHighScore(level.getType(), level.getLevelNumber(), score);
 
-        }*/
+        }
 
         highSscoreTextView.setText(getString(R.string.High_score) + ": " + highScore);
     }

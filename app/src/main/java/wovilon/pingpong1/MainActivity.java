@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         SM.registerListener(this,mySensor,SensorManager.SENSOR_DELAY_NORMAL);
 
         new DbUpdater(this, "MainLevels").addMainLevels();
+        //new DbUpdater(this, "MainLevels").setHighScore("MainLevels",0,1);
 
 
     }

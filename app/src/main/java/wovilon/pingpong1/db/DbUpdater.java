@@ -82,12 +82,12 @@ public class DbUpdater {
 
         ContentValues data=new ContentValues();
         data.put("highScore",highScore);
-        db.insert(levelType, null, data);
+        db.update(levelType, data, "id="+id, null);
         data.clear();
 
 
-        /*Log.d("MyLOG", getHighScore(levelType, id)+"");
-        int g=8;*/
+        Log.d("MyLOG", getHighScore(levelType, id)+"");
+        int g=8;
     }
 
     public int getHighScore(String levelType,int id){
@@ -137,7 +137,7 @@ public class DbUpdater {
         data.put("id",id);
         data.put("name", "MyLevel_"+id);
         data.put("bricksJSON", levelJSON.toString());
-        data.put("highScore",126);
+        data.put("highScore",0);
         db.insert("MainLevels", null, data);
         data.clear();
     }
