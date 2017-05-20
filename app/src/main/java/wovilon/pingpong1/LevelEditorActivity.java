@@ -43,7 +43,7 @@ LevelEditorView levelEditorView;
             Resources resources = getResources(); //get screen size and create boolean gameField
             DisplayMetrics displayMetrics = resources.getDisplayMetrics();
 
-            //if button pressed (calculated from coordinates)
+            //if button save and play pressed (calculated from coordinates)
             if (x > levelEditorView.savePlayButtonXY.x
                     & x < levelEditorView.savePlayButtonXY.x + levelEditorView.button.getWidth()
                     & y > levelEditorView.savePlayButtonXY.y + resources.getDimension(R.dimen.dy)
@@ -61,13 +61,15 @@ LevelEditorView levelEditorView;
                 intent.putExtra("LevelType", level.getType());
                 intent.putExtra("LevelNumber", dbUpdater.getCount());
                 startActivity(intent);
-
+            //if load button pressed
             } else if (x > levelEditorView.loadButtonXY.x
                     & x < levelEditorView.loadButtonXY.x + levelEditorView.button.getWidth()
                     & y > levelEditorView.loadButtonXY.y + resources.getDimension(R.dimen.dy)
                     & y < levelEditorView.loadButtonXY.y + levelEditorView.button.getHeight()
                     + resources.getDimension(R.dimen.dy) * 2) {
 
+                Intent intent=new Intent(LevelEditorActivity.this, LevelsListActivity.class);
+                startActivity(intent);
 
             } else if (x < levelEditorView.savePlayButtonXY.y) { //else create or delete brick
                 //calculating start point of bricks x0

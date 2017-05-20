@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.util.Log;
 
@@ -15,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import wovilon.pingpong1.R;
 import wovilon.pingpong1.model.Level;
 
 public class DbUpdater {
@@ -61,7 +64,8 @@ public class DbUpdater {
         data.clear();
     }
 
-    public ArrayList<Point> getLevelBricksFromDb(int i){
+    public Level getLevelFromDb(int i){
+        Level level=new Level();
         ArrayList<Point> bricks=new ArrayList<>();
         c.moveToPosition(i);
         try{
@@ -74,7 +78,12 @@ public class DbUpdater {
             }
         }catch (JSONException je){}
 
-        return bricks;
+        level.setBricks(bricks);
+        level.setType(table);
+        level.setLevelNumber(i);
+        level.setName(c.getString(c.getColumnIndex("name")));
+
+        return level;
     }
 
     public void setHighScore(String levelType,int id,int highScore){
@@ -144,7 +153,8 @@ public class DbUpdater {
 
     private int[][] Level_1(){
         Resources resources = context.getResources();
-        int Y=260, w=60, h=60;
+        Bitmap brick=BitmapFactory.decodeResource(resources, R.drawable.brick);
+        int Y=260, w= brick.getWidth(), h=brick.getHeight();
         int X=resources.getDisplayMetrics().widthPixels/2-5*w;//calculate start X, so that bricks are symetric on screen
         int [][] brickPoints = new int[22][2];
 

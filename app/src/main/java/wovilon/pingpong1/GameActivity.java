@@ -135,7 +135,7 @@ class GameManager extends Thread {
         this.score=0;
 
         DbUpdater dbUpdater=new DbUpdater(context, level.getType());
-        level.setBricks(dbUpdater.getLevelBricksFromDb(level.getLevelNumber()));
+        level.setBricks(dbUpdater.getLevelFromDb(level.getLevelNumber()).getBricks());
 
         Resources resources=context.getResources(); //get screen size and create boolean gameField
         DisplayMetrics displayMetrics=resources.getDisplayMetrics();
@@ -348,6 +348,8 @@ class GameManager extends Thread {
             canv=canvas;
             Resources resources=context.getResources();
             bitmap= BitmapFactory.decodeResource(resources,R.drawable.ball);
+            x=resources.getDisplayMetrics().widthPixels/2-bitmap.getWidth()/2;
+            y=resources.getDisplayMetrics().heightPixels*0.8;
 
             int n=0,nmax=0; //get ball pixels
             for (int i=0;i<bitmap.getWidth();i++) {

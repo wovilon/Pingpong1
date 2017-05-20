@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mySensor=SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this,mySensor,SensorManager.SENSOR_DELAY_NORMAL);
 
-        new DbUpdater(this, "MainLevels").addMainLevels();
+        new DbUpdater(this, "MainLevels").addMainLevels(); //TODO now I add level everytime, but once needed
         //new DbUpdater(this, "MainLevels").setHighScore("MainLevels",0,1);
 
 

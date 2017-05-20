@@ -16,11 +16,11 @@
         android:id="@+id/generalSound"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="21dp"
         android:layout_marginTop="75dp"
-        android:fadeScrollbars="false" />
+        android:fadeScrollbars="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <SeekBar
         android:id="@+id/musicSound"
@@ -42,20 +42,22 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/generalSound"
-        android:layout_marginTop="28dp"
         android:text="@string/SoundSettings"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:layout_above="@+id/GeneralSoundView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="28dp" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/MusicSoundView"
-        android:layout_alignTop="@+id/effectsSound"
         android:text="@string/EffectsSound"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:layout_alignTop="@+id/effectsSound"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/textView8"
@@ -71,29 +73,32 @@
         android:id="@+id/BallVelocityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/turbulenceRadioGroup"
-        android:layout_alignStart="@+id/BallVelocitySeekBar"
         android:text="@string/ball_velocity"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:layout_alignBaseline="@+id/textView8"
+        android:layout_alignBottom="@+id/textView8"
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_alignStart="@+id/textView6" />
 
     <TextView
         android:id="@+id/GeneralSoundView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/generalSound"
-        android:layout_marginEnd="14dp"
         android:text="@string/GeneralSound"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:layout_alignTop="@+id/generalSound"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/MusicSoundView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/GeneralSoundView"
-        android:layout_alignTop="@+id/musicSound"
         android:text="@string/MusicSound"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:layout_alignTop="@+id/musicSound"
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_alignStart="@+id/textView6" />
 
     <RadioGroup
         android:id="@+id/turbulenceRadioGroup"
@@ -137,11 +142,13 @@
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/turbulenceRadioGroup"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_alignTop="@+id/turbulenceRadioGroup"
         android:max="10"
         android:progress="5"
-        android:rotation="270" />
+        android:rotation="270"
+        android:layout_alignBottom="@+id/turbulenceRadioGroup"
+        android:layout_toEndOf="@+id/turbulenceRadioGroup"
+        android:layout_marginBottom="35dp"
+        android:layout_alignLeft="@+id/GeneralSoundView"
+        android:layout_alignStart="@+id/GeneralSoundView" />
 
 </RelativeLayout>

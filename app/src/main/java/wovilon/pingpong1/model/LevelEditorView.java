@@ -60,16 +60,16 @@ public class LevelEditorView extends View {
 
         canvas.drawBitmap(mBitmap,0,0, mPaint);
         canvas.drawBitmap(button,savePlayButtonXY.x,savePlayButtonXY.y,mPaint);
-        //canvas.drawBitmap(button,loadButtonXY.x,loadButtonXY.y,mPaint);
+        canvas.drawBitmap(button,loadButtonXY.x,loadButtonXY.y,mPaint);
         mPaint.setTypeface(Typeface.create("Arial",Typeface.BOLD));
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setTextSize(32);
         canvas.drawText(resources.getString(R.string.SavePlay),
                 savePlayButtonXY.x+button.getWidth()/2,
                 savePlayButtonXY.y+button.getHeight()/2+resources.getDimension(R.dimen.dy),mPaint);
-       /* canvas.drawText(resources.getString(R.string.Load),
+        canvas.drawText(resources.getString(R.string.Load),
                 loadButtonXY.x+button.getWidth()/2,
-                loadButtonXY.y+button.getHeight()/2+resources.getDimension(R.dimen.dy),mPaint);*/
+                loadButtonXY.y+button.getHeight()/2+resources.getDimension(R.dimen.dy),mPaint);
 
 
         int i=0;
