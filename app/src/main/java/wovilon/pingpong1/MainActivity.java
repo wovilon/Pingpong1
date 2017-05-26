@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
@@ -81,13 +81,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onSettingsClick(View view) {
         Intent intent=new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
-
-
     }
 
     public void onContactsClick(View view) {
+        Intent intent=new Intent(MainActivity.this, ContactsActivity.class);
+        startActivity(intent);
     }
 
-    public void onExitClick(View view) {System.exit(0); }
+    public void onExitClick(View view) {System.exit(0); System.exit(0); }
 
 }

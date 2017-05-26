@@ -46,9 +46,9 @@ LevelEditorView levelEditorView;
             //if button save and play pressed (calculated from coordinates)
             if (x > levelEditorView.savePlayButtonXY.x
                     & x < levelEditorView.savePlayButtonXY.x + levelEditorView.button.getWidth()
-                    & y > levelEditorView.savePlayButtonXY.y + resources.getDimension(R.dimen.dy)
+                    & y > levelEditorView.savePlayButtonXY.y /*+ resources.getDimension(R.dimen.dy)*/
                     & y < levelEditorView.savePlayButtonXY.y + levelEditorView.button.getHeight()
-                    + resources.getDimension(R.dimen.dy) * 2) {
+                    /*+ resources.getDimension(R.dimen.dy) * 2*/) {
 
                 Level level=new Level();
                 level.setBricks(bricksList);

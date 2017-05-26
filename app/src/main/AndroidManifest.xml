@@ -35,7 +35,8 @@
             android:name="io.fabric.ApiKey"
             android:value="5677c33efd5093043f8c64254464d1abf7a13490" />
 
-        <activity android:name=".LevelsListActivity"></activity>
+        <activity android:name=".LevelsListActivity" />
+        <activity android:name=".ContactsActivity"></activity>
     </application>
 
 </manifest>

@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/menubackground"
+    android:background="@color/colorBlack"
     tools:context="wovilon.pingpong1.LevelsListActivity">
 
     <ListView
         android:id="@+id/LevelsListView"
-        android:layout_width="439dp"
-        android:layout_height="557dp"
-        android:background="@drawable/menubackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="-14dp"
         tools:layout_editor_absoluteY="-15dp" />
 </android.support.constraint.ConstraintLayout>

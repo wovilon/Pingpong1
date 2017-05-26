@@ -33,4 +33,12 @@
     <string name="Load">LOAD</string>
     <string name="Score">Score</string>
     <string name="High_score">High score</string>
+
+    <string name="vladimirAbout">
+        Programming: \nVladimir Anisimov, \nAndroid developer, \n(full-stack) \nwwwovilon@gmail.com
+     </string>
+    <string name="yuriyAbout">
+      Management and production: \nYuriy Lozinsky, \nManaging Partner, \ndigitaloutlooks.com </string>
+
+    <string name="digitaloutlooks">DIGITALOUTLOOKS</string>
 </resources>

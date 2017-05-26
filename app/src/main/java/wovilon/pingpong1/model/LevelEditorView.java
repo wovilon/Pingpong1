@@ -89,10 +89,15 @@ public class LevelEditorView extends View {
 
     }
 
-    public void drawButtonClicked(){
+    public void drawButtonSaveAndPalyClicked(){
         canvas.drawBitmap(buttonClicked,savePlayButtonXY.x,savePlayButtonXY.y,mPaint);
+
+    }
+
+    public void drawButtonLoadClicked(){
         canvas.drawBitmap(buttonClicked,loadButtonXY.x,loadButtonXY.y,mPaint);
     }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
