@@ -70,18 +70,19 @@
         android:onClick="onContactsClick" />
 
     <Button
-        android:text="@string/Exit"
+        android:id="@+id/Button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button4"
         android:layout_marginTop="17dp"
-        android:id="@+id/Button5"
+        android:onClick="onExitClick"
+        android:text="@string/Exit"
         android:textColor="@color/text_color"
         android:textColorLink="@android:color/holo_blue_dark"
         android:textSize="@dimen/activity_vertical_margin"
         android:textStyle="normal|bold"
-        android:layout_below="@+id/button4"
-        android:layout_alignParentStart="true"
-        android:onClick="onExitClick" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/textView5"

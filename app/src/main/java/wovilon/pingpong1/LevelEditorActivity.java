@@ -71,7 +71,7 @@ LevelEditorView levelEditorView;
                 Intent intent=new Intent(LevelEditorActivity.this, LevelsListActivity.class);
                 startActivity(intent);
 
-            } else if (x < levelEditorView.savePlayButtonXY.y) { //else create or delete brick
+            } else if (y < levelEditorView.savePlayButtonXY.y-50) { //else create or delete brick
                 //calculating start point of bricks x0
                 int brickWidth = BitmapFactory.decodeResource(resources, R.drawable.brick).getWidth();
                 int brickHeight = BitmapFactory.decodeResource(resources, R.drawable.brick).getHeight();

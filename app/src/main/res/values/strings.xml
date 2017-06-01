@@ -11,7 +11,7 @@
     <string name="Gyro3">Gyroscope axis Z test:</string>
     <string name="Testing">Testing sensor system:</string>
     <string name="YouWin">YOU WIN!</string>
-    <string name="YouLoose">YOU LOOSE!</string>
+    <string name="YouLoose">FINISHED!</string>
     <string name="Retry">Play again</string>
     <string name="ToMainMenu">To  main menu</string>
     <string name="GeneralSound">General sound</string>

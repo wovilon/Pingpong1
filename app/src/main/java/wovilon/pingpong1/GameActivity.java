@@ -33,6 +33,7 @@ import static java.lang.Math.sin;
 
 
 public class GameActivity extends Activity implements SensorEventListener {
+    GameView gameView;
     Sensor mySensor;
     SensorManager SM;
     public double phoneRotation;
@@ -59,7 +60,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         level.setType(intent.getExtras().getString("LevelType"));
         level.setLevelNumber(intent.getExtras().getInt("LevelNumber"));
 
-        setContentView(new GameView(this,this.phoneRotation, level));
+        gameView=new GameView(this,this.phoneRotation, level);
+        setContentView(gameView);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -69,13 +71,18 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     }
 
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){ Intent intent=new Intent(GameActivity.this, MainActivity.class);
-            startActivity(intent); MusicPlayer.onstop();}
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            Intent intent=new Intent(GameActivity.this, MainActivity.class);
+            startActivity(intent);
+            MusicPlayer.onstop();
+            gameView.getGameManager().setRunning(false);
+            finish();
+        }
         return true;
     }
-
 
 
 
@@ -111,12 +118,15 @@ public class GameActivity extends Activity implements SensorEventListener {
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         }
 
+        public GameManager getGameManager(){
+            return gameManager;
+        }
     }
 }
 
 class GameManager extends Thread {
 
-    private boolean running = false;
+    public boolean running = false;
     private SurfaceHolder surfaceHolder;
     private Context context;
     private double phoneRotation;
@@ -159,7 +169,8 @@ class GameManager extends Thread {
 
     }
 
-    void setRunning(boolean running) {this.running = running;
+    void setRunning(boolean running) {
+        this.running = running;
             }
 
     @Override
@@ -170,6 +181,7 @@ class GameManager extends Thread {
         Pad pad=new Pad(canvas,context,this.displayWidth,this.displayHeight,this.phoneRotation);
         Brick [] bricks=new Brick[this.createBricks().length];
 
+        int iteration=0;
         Paint mPaint=new Paint();
         ScoreImage scoreImage=new ScoreImage(canvas,context,mPaint);
         //boolean touched=false, touched1=false;
@@ -190,7 +202,9 @@ class GameManager extends Thread {
                 canvas = surfaceHolder.lockCanvas(null);
                 if (canvas == null)
                     continue;
-                backGround.draw(0,0);
+
+                if (backGround.bitmap.getWidth()-iteration/2>displayWidth) backGround.draw(-iteration/2,0);
+                else backGround.draw(backGround.bitmap.getWidth()-displayWidth,0);
 
                 for (int i=0;i<this.createBricks().length;i++){
                     if (bricks[i].state)
@@ -217,9 +231,10 @@ class GameManager extends Thread {
                     intent.putExtra("LevelNumber", level.getLevelNumber());
                     context.startActivity(intent);
                     MusicPlayer.onstop();
-                    running=false;
+                    running=false; //to stop the thread
                 }
 
+                iteration++;
                 sleep(10);
 
             }catch(Exception e) {}
@@ -296,7 +311,7 @@ class GameManager extends Thread {
                  }
              }
              if (this.defeatedBricks>=bricks.length) {
-                 running = false;
+                 running = false; //to stop the thread
                  Intent intent=new Intent(context, WinLooseActivity.class);
                  intent.putExtra("winloose",true);
                  intent.putExtra("score", score);
@@ -309,7 +324,7 @@ class GameManager extends Thread {
 
              if (collisionObject.equals("brick")) score += 10;
              else if (collisionObject.equals("pad")) score -= 0;
-             else if (collisionObject.equals("wall")) score -= 3;
+             else if (collisionObject.equals("wall")) score -= 1;
              if (score < 0) score = 0;
 
          return alfa;
@@ -347,7 +362,7 @@ class GameManager extends Thread {
         Ball(Canvas canvas, Context context) {
             canv=canvas;
             Resources resources=context.getResources();
-            bitmap= BitmapFactory.decodeResource(resources,R.drawable.ball);
+            bitmap= BitmapFactory.decodeResource(resources,R.drawable.ball_1);
             x=resources.getDisplayMetrics().widthPixels/2-bitmap.getWidth()/2;
             y=resources.getDisplayMetrics().heightPixels*0.8;
 
@@ -384,8 +399,8 @@ class GameManager extends Thread {
       Brick(Canvas canvas, Context context, boolean[][] gameField){
             canv=canvas; this.context=context; this.gameField=gameField;
             Resources resources=context.getResources();
-            bitmap= BitmapFactory.decodeResource(resources,R.drawable.brick);
-        }
+            bitmap= BitmapFactory.decodeResource(resources,R.drawable.brick_asteroid);
+    }
 
         void draw(int x, int y){
             canv.drawBitmap(bitmap,x,y,mPaint);
@@ -419,7 +434,7 @@ class GameManager extends Thread {
         Pad(Canvas canvas, Context context, int displayWidth, int displayHeight, double phoneRotation) {
             canv=canvas; this.context=context; this.phoneRotation=phoneRotation;
             Resources resources=context.getResources();
-            bitmap= BitmapFactory.decodeResource(resources,R.drawable.pad);
+            bitmap= BitmapFactory.decodeResource(resources,R.drawable.pad_cosmonavt);
             this.sens=new Sens(context);
             velocity=(double)context.getSharedPreferences("Settings", 0)
                     .getInt("BallVelocity", 20)/5+5;//depends on ball velocity
@@ -483,8 +498,13 @@ class GameManager extends Thread {
         BackGround(Canvas canvas){
             canv=canvas;
             Resources resources=context.getResources();
-            inputBitmap= BitmapFactory.decodeResource(resources,R.drawable.field4);
-            bitmap = Bitmap.createScaledBitmap(inputBitmap, displayWidth, displayHeight, true);
+            inputBitmap= BitmapFactory.decodeResource(resources,R.drawable.background_cosmos);
+            double scale=displayHeight*1.0/inputBitmap.getHeight();
+            bitmap = Bitmap.createScaledBitmap(inputBitmap,
+                    (int)(inputBitmap.getWidth()*scale),
+                    (int)(inputBitmap.getHeight()*scale), true);
+
+            //bitmap = Bitmap.createScaledBitmap(inputBitmap, displayWidth, displayHeight, true);
         }
 
         void draw(int x, int y){

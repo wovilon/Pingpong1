@@ -30,7 +30,7 @@ public class WinLooseActivity extends AppCompatActivity {
         }
         else {
             winLoose.setText(R.string.YouLoose);
-            winLoose.setTextColor(getResources().getColor(R.color.RedCol));
+            winLoose.setTextColor(getResources().getColor(R.color.GreenCol));
         }
 
         //set score textView text
@@ -62,5 +62,6 @@ public class WinLooseActivity extends AppCompatActivity {
     public void onMainMenu(View view) {
         Intent intent=new Intent(WinLooseActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }

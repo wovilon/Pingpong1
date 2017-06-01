@@ -88,6 +88,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(intent);
     }
 
-    public void onExitClick(View view) {System.exit(0); System.exit(0); }
+    public void onExitClick(View view) { System.exit(0); }
 
 }
