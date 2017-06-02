@@ -203,8 +203,8 @@ class GameManager extends Thread {
                 if (canvas == null)
                     continue;
 
-                if (backGround.bitmap.getWidth()-iteration/2>displayWidth) backGround.draw(-iteration/2,0);
-                else backGround.draw(backGround.bitmap.getWidth()-displayWidth,0);
+                if (backGround.bitmap.getWidth()-displayWidth>iteration/2) backGround.draw(-iteration/2,0);
+                else backGround.draw(-(backGround.bitmap.getWidth()-displayWidth),0);
 
                 for (int i=0;i<this.createBricks().length;i++){
                     if (bricks[i].state)

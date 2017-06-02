@@ -38,7 +38,7 @@ public class LevelEditorView extends View {
     public LevelEditorView(Context context){
         super(context);
 
-        mBitmap=BitmapFactory.decodeResource(resources,R.drawable.field4);
+        mBitmap=BitmapFactory.decodeResource(resources,R.drawable.background_menu_cosmos);
         mBitmap=Bitmap.createScaledBitmap(mBitmap, displayMetrics.widthPixels, displayMetrics.heightPixels, true);
         brickBitmap=BitmapFactory.decodeResource(resources,R.drawable.brick);
         button=BitmapFactory.decodeResource(resources,R.drawable.editor_button);

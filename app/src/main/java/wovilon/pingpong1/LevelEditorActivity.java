@@ -37,8 +37,8 @@ LevelEditorView levelEditorView;
             levelEditorView.drawButtonClicked();
 
         }else */if (event.getAction()==MotionEvent.ACTION_UP) {
-            int x = (int) event.getX();
-            int y = (int) event.getY();
+            int x = (int) event.getX()-5;
+            int y = (int) event.getY()-5;
 
             Resources resources = getResources(); //get screen size and create boolean gameField
             DisplayMetrics displayMetrics = resources.getDisplayMetrics();
@@ -73,8 +73,8 @@ LevelEditorView levelEditorView;
 
             } else if (y < levelEditorView.savePlayButtonXY.y-50) { //else create or delete brick
                 //calculating start point of bricks x0
-                int brickWidth = BitmapFactory.decodeResource(resources, R.drawable.brick).getWidth();
-                int brickHeight = BitmapFactory.decodeResource(resources, R.drawable.brick).getHeight();
+                int brickWidth = BitmapFactory.decodeResource(resources, R.drawable.brick_asteroid).getWidth();
+                int brickHeight = BitmapFactory.decodeResource(resources, R.drawable.brick_asteroid).getHeight();
                 int x0 = displayMetrics.widthPixels / 2 - (displayMetrics.widthPixels / 2 / brickWidth) * brickWidth;
 
                 x = ((x - x0) / brickWidth) * brickWidth + x0 + 5; //5 is empiric calibrating value
