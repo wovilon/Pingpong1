@@ -19,6 +19,7 @@
             android:id="@+id/LevelsListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
             tools:layout_editor_absoluteX="-12dp"
             tools:layout_editor_absoluteY="-14dp" />
     </LinearLayout>

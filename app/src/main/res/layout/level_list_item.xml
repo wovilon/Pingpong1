@@ -16,7 +16,9 @@
         android:layout_centerVertical="true"
         android:gravity="center_horizontal|center"
         android:text="TextView"
+        android:textAllCaps="false"
         android:textColor="@color/text_color"
-        android:textStyle="bold" />
+        android:textScaleX="0.7"
+        android:textSize="18sp" />
 
 </LinearLayout>
