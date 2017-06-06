@@ -41,4 +41,7 @@
       Management and production: \nYuriy Lozinsky, \nManaging Partner, \ndigitaloutlooks.com </string>
 
     <string name="digitaloutlooks">DIGITALOUTLOOKS</string>
+    <string name="insert_level_name_here">Insert level name here</string>
+    <string name="save">Save</string>
+    <string name="play">Play</string>
 </resources>

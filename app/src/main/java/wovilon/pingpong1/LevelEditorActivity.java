@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import wovilon.pingpong1.model.LevelEditorView;
 public class LevelEditorActivity extends AppCompatActivity {
 LevelEditorView levelEditorView;
     ArrayList<Point> bricksList;
+    private int requestCode=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +52,10 @@ LevelEditorView levelEditorView;
                     & y < levelEditorView.savePlayButtonXY.y + levelEditorView.button.getHeight()
                     /*+ resources.getDimension(R.dimen.dy) * 2*/) {
 
-                Level level=new Level();
-                level.setBricks(bricksList);
-                level.setType("UserLevels");
-                DbUpdater dbUpdater=new DbUpdater(this,level.getType());
-                dbUpdater.addLevel(level);
-                MusicPlayer musicPlayer=new MusicPlayer();
-                musicPlayer.onstop();
-                Intent intent=new Intent(LevelEditorActivity.this, GameActivity.class);
-                intent.putExtra("LevelType", level.getType());
-                intent.putExtra("LevelNumber", dbUpdater.getCount());
-                startActivity(intent);
+                //start activity, where we insert level name for result
+                Intent intent=new Intent(LevelEditorActivity.this, SaveLevelActivity.class);
+                startActivityForResult(intent, requestCode);
+
             //if load button pressed
             } else if (x > levelEditorView.loadButtonXY.x
                     & x < levelEditorView.loadButtonXY.x + levelEditorView.button.getWidth()
@@ -95,4 +90,29 @@ LevelEditorView levelEditorView;
         }
         return super.onTouchEvent(event);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Level level=new Level();
+        if (requestCode==this.requestCode) {
+            if (resultCode == RESULT_OK) {
+                String levelName = data.getStringExtra("LEVELNAME");
+
+                level.setName(levelName);
+                level.setBricks(bricksList);
+                level.setType("UserLevels");
+                DbUpdater dbUpdater = new DbUpdater(this, level.getType());
+                dbUpdater.addLevel(level);
+                MusicPlayer musicPlayer = new MusicPlayer();
+                musicPlayer.onstop();
+                Intent intent = new Intent(LevelEditorActivity.this, GameActivity.class);
+                intent.putExtra("LevelType", level.getType());
+                intent.putExtra("LevelNumber", dbUpdater.getCount());
+                startActivity(intent);
+
+            }
+        }
+}
 }

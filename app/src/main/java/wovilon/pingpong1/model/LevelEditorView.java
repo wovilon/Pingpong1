@@ -13,6 +13,7 @@ import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ import wovilon.pingpong1.R;
 
 public class LevelEditorView extends View {
     Canvas canvas;
+    Context context;
     private Paint mPaint=new Paint();
     private Rect mRect = new Rect();
     private Bitmap mBitmap;
@@ -37,10 +39,11 @@ public class LevelEditorView extends View {
 
     public LevelEditorView(Context context){
         super(context);
+        this.context=context;
 
         mBitmap=BitmapFactory.decodeResource(resources,R.drawable.background_menu_cosmos);
         mBitmap=Bitmap.createScaledBitmap(mBitmap, displayMetrics.widthPixels, displayMetrics.heightPixels, true);
-        brickBitmap=BitmapFactory.decodeResource(resources,R.drawable.brick);
+        brickBitmap=BitmapFactory.decodeResource(resources,R.drawable.brick_asteroid);
         button=BitmapFactory.decodeResource(resources,R.drawable.editor_button);
         buttonClicked=BitmapFactory.decodeResource(resources,R.drawable.editor_button_clicked);
 
@@ -58,12 +61,16 @@ public class LevelEditorView extends View {
         super.onDraw(canvas);
         this.canvas=canvas;
 
+        Typeface font=Typeface.createFromAsset(context.getAssets(), "fonts/alienleaguebold.ttf");
         canvas.drawBitmap(mBitmap,0,0, mPaint);
-        canvas.drawBitmap(button,savePlayButtonXY.x,savePlayButtonXY.y,mPaint);
-        canvas.drawBitmap(button,loadButtonXY.x,loadButtonXY.y,mPaint);
+/*      canvas.drawBitmap(button,savePlayButtonXY.x,savePlayButtonXY.y,mPaint);
+        canvas.drawBitmap(button,loadButtonXY.x,loadButtonXY.y,mPaint);*/
         mPaint.setTypeface(Typeface.create("Arial",Typeface.BOLD));
         mPaint.setTextAlign(Paint.Align.CENTER);
-        mPaint.setTextSize(32);
+        mPaint.setColor(getResources().getColor(R.color.text_color));
+        mPaint.setTextSize(48);
+        mPaint.setTypeface(font);
+
         canvas.drawText(resources.getString(R.string.SavePlay),
                 savePlayButtonXY.x+button.getWidth()/2,
                 savePlayButtonXY.y+button.getHeight()/2+resources.getDimension(R.dimen.dy),mPaint);

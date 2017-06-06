@@ -5,7 +5,7 @@
     android:id="@+id/activity_settings"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/menubackground"
+    android:background="@drawable/background_menu_cosmos"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -16,11 +16,11 @@
         android:id="@+id/generalSound"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
-        android:fadeScrollbars="false"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="75dp"
+        android:fadeScrollbars="false" />
 
     <SeekBar
         android:id="@+id/musicSound"
@@ -42,22 +42,22 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/SoundSettings"
-        android:textColor="@android:color/darker_gray"
         android:layout_above="@+id/GeneralSoundView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="28dp" />
+        android:layout_marginBottom="28dp"
+        android:text="@string/SoundSettings"
+        android:textColor="@android:color/darker_gray" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/EffectsSound"
-        android:textColor="@android:color/darker_gray"
-        android:layout_alignTop="@+id/effectsSound"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignTop="@+id/effectsSound"
+        android:text="@string/EffectsSound"
+        android:textColor="@android:color/darker_gray" />
 
     <TextView
         android:id="@+id/textView8"
@@ -73,32 +73,32 @@
         android:id="@+id/BallVelocityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ball_velocity"
-        android:textColor="@android:color/darker_gray"
         android:layout_alignBaseline="@+id/textView8"
         android:layout_alignBottom="@+id/textView8"
         android:layout_alignLeft="@+id/textView6"
-        android:layout_alignStart="@+id/textView6" />
+        android:layout_alignStart="@+id/textView6"
+        android:text="@string/ball_velocity"
+        android:textColor="@android:color/darker_gray" />
 
     <TextView
         android:id="@+id/GeneralSoundView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/GeneralSound"
-        android:textColor="@android:color/darker_gray"
-        android:layout_alignTop="@+id/generalSound"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignTop="@+id/generalSound"
+        android:text="@string/GeneralSound"
+        android:textColor="@android:color/darker_gray" />
 
     <TextView
         android:id="@+id/MusicSoundView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/MusicSound"
-        android:textColor="@android:color/darker_gray"
-        android:layout_alignTop="@+id/musicSound"
         android:layout_alignLeft="@+id/textView6"
-        android:layout_alignStart="@+id/textView6" />
+        android:layout_alignStart="@+id/textView6"
+        android:layout_alignTop="@+id/musicSound"
+        android:text="@string/MusicSound"
+        android:textColor="@android:color/darker_gray" />
 
     <RadioGroup
         android:id="@+id/turbulenceRadioGroup"
@@ -142,13 +142,13 @@
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/turbulenceRadioGroup"
+        android:layout_alignLeft="@+id/GeneralSoundView"
+        android:layout_alignStart="@+id/GeneralSoundView"
+        android:layout_marginBottom="35dp"
+        android:layout_toEndOf="@+id/turbulenceRadioGroup"
         android:max="10"
         android:progress="5"
-        android:rotation="270"
-        android:layout_alignBottom="@+id/turbulenceRadioGroup"
-        android:layout_toEndOf="@+id/turbulenceRadioGroup"
-        android:layout_marginBottom="35dp"
-        android:layout_alignLeft="@+id/GeneralSoundView"
-        android:layout_alignStart="@+id/GeneralSoundView" />
+        android:rotation="270" />
 
 </RelativeLayout>

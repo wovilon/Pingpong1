@@ -57,7 +57,7 @@ public class DbUpdater {
 
         ContentValues data=new ContentValues();
         data.put("id",id);
-        data.put("name", "MyLevel_"+id);
+        data.put("name", level.getName());
         data.put("bricksJSON", levelJSON.toString());
         data.put("highScore",0);
         db.insert("UserLevels", null, data);

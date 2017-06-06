@@ -32,7 +32,7 @@ public class LevelsListActivity extends AppCompatActivity {
         Map<String, Object> m;
         String levelLb="Level";
 
-        ArrayList<String> levelsNamesList= new ArrayList<>();
+        //ArrayList<String> levelsNamesList= new ArrayList<>();
         DbUpdater dbUpdater=new DbUpdater(this, "UserLevels");
 
         for (int i=0; i<dbUpdater.getCount(); i++){
@@ -40,7 +40,7 @@ public class LevelsListActivity extends AppCompatActivity {
             m.put(levelLb,dbUpdater.getLevelFromDb(i).getName());
             levelsList.add(m);
             //levelsList.add(dbUpdater.getLevelFromDb(i));;
-            levelsNamesList.add(dbUpdater.getLevelFromDb(i).getName());
+            //levelsNamesList.add(dbUpdater.getLevelFromDb(i).getName());
         }
 
 

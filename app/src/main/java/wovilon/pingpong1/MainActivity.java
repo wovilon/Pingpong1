@@ -4,6 +4,7 @@ package wovilon.pingpong1;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,6 +12,9 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
 import io.fabric.sdk.android.Fabric;
@@ -45,6 +49,29 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         setContentView(R.layout.activity_main);
+
+        //font, like "Alien vs Predator" import
+        Typeface font=Typeface.createFromAsset(getAssets(), "fonts/alienleaguebold.ttf");
+        Button button=(Button)findViewById(R.id.button1);
+        button.setTypeface(font);
+        button.setAllCaps(true);
+        button.setTextSize(32);//TODO move to style
+
+        button=(Button)findViewById(R.id.button2);
+        button.setTypeface(font);
+        button.setAllCaps(true);
+        button.setTextSize(32);
+
+        button=(Button)findViewById(R.id.button3);
+        button.setTypeface(font);
+        button.setAllCaps(true);
+        button.setTextSize(32);
+
+        button=(Button)findViewById(R.id.button4);
+        button.setTypeface(font);
+        button.setAllCaps(true);
+        button.setTextSize(32);
+
 
         SharedPreferences settings = getSharedPreferences("Settings", 0);
         musicPlayer=new MusicPlayer();
