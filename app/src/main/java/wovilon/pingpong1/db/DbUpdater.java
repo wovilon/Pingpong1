@@ -153,7 +153,7 @@ public class DbUpdater {
 
     private int[][] Level_1(){
         Resources resources = context.getResources();
-        Bitmap brick=BitmapFactory.decodeResource(resources, R.drawable.brick);
+        Bitmap brick=BitmapFactory.decodeResource(resources, R.drawable.brick_asteroid);
         int Y=260, w= brick.getWidth(), h=brick.getHeight();
         int X=resources.getDisplayMetrics().widthPixels/2-5*w;//calculate start X, so that bricks are symetric on screen
         int [][] brickPoints = new int[22][2];

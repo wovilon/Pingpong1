@@ -39,8 +39,8 @@ LevelEditorView levelEditorView;
             levelEditorView.drawButtonClicked();
 
         }else */if (event.getAction()==MotionEvent.ACTION_UP) {
-            int x = (int) event.getX()-5;
-            int y = (int) event.getY()-5;
+            int x = (int) event.getX();
+            int y = (int) event.getY()-10;
 
             Resources resources = getResources(); //get screen size and create boolean gameField
             DisplayMetrics displayMetrics = resources.getDisplayMetrics();
