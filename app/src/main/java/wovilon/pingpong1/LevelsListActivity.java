@@ -57,6 +57,7 @@ public class LevelsListActivity extends AppCompatActivity {
         levelsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MusicPlayer.onstop();
                 Intent intent=new Intent(LevelsListActivity.this, GameActivity.class);
                 intent.putExtra("LevelType", "UserLevels");
                 intent.putExtra("LevelNumber", i);

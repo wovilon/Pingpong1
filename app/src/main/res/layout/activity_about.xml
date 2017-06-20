@@ -57,13 +57,13 @@
             android:weightSum="1">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageViewAbout"
                 android:layout_width="105dp"
                 android:layout_height="120dp"
                 app:srcCompat="@drawable/yuriy_lozinsky_photo" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/textViewAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
