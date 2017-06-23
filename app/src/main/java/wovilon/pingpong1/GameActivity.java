@@ -399,7 +399,7 @@ class GameManager extends Thread {
       Brick(Canvas canvas, Context context, boolean[][] gameField){
             canv=canvas; this.context=context; this.gameField=gameField;
             Resources resources=context.getResources();
-            bitmap= BitmapFactory.decodeResource(resources,R.drawable.brick_asteroid);
+            bitmap= BitmapFactory.decodeResource(resources,R.drawable.rock_brick);
     }
 
         void draw(int x, int y){
